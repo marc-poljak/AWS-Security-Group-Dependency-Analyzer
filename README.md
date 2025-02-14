@@ -2,6 +2,14 @@
 
 A Python tool to analyze AWS security group dependencies and identify obsolete or unused security groups across multiple AWS services.
 
+## ⚠️ Disclaimer
+
+**USE AT YOUR OWN RISK**. This tool is provided "as is", without warranty of any kind, express or implied. Neither the authors nor contributors shall be liable for any damages or consequences arising from the use of this tool. Always:
+- Test in a non-production environment first
+- Verify results manually before taking action
+- Maintain proper backups
+- Follow your organization's security policies
+
 ## Features
 
 - 🔍 Analyzes security group dependencies across multiple AWS services
@@ -44,11 +52,51 @@ A Python tool to analyze AWS security group dependencies and identify obsolete o
    pip install -r requirements.txt
    ```
 
-3. Configure AWS credentials using one of these methods:
-   - AWS CLI: `aws configure`
-   - Environment variables: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
-   - IAM role attached to EC2 instance
-   - Credentials file: `~/.aws/credentials`
+3. Configure AWS Authentication:
+
+   There are several ways to authenticate with AWS:
+
+   ### Option 1: AWS SSO with Config File
+   Use this method if your organization uses AWS SSO. Set up in `~/.aws/config`:
+   ```ini
+   [profile my-sso-profile]
+   sso_start_url = https://my-sso-portal.awsapps.com/start
+   sso_region = eu-central-1
+   sso_account_id = 123456789012
+   sso_role_name = MyRole
+   region = eu-central-1
+   output = json
+   ```
+
+   Then authenticate:
+   ```bash
+   # Set your AWS profile and authenticate
+   export AWS_PROFILE=my-sso-profile
+   
+   # Verify authentication or trigger SSO login if needed
+   aws sts get-caller-identity --profile $AWS_PROFILE > /dev/null 2>&1 || aws sso login --profile $AWS_PROFILE
+   ```
+
+   ### Option 2: Access Keys with Credentials File
+   Use this method if you have AWS access keys. Set up in `~/.aws/credentials`:
+   ```ini
+   [my-profile]
+   aws_access_key_id = <your_access_key>
+   aws_secret_access_key = <your_secret_key>
+   ```
+
+   Then simply use:
+   ```bash
+   export AWS_PROFILE=my-profile
+   ```
+
+   ### Option 3: Environment Variables
+   Direct environment variable setup:
+   ```bash
+   export AWS_ACCESS_KEY_ID=<your_access_key>
+   export AWS_SECRET_ACCESS_KEY=<your_secret_key>
+   export AWS_DEFAULT_REGION=eu-central-1
+   ```
 
 ## Usage
 
@@ -164,7 +212,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Built using the [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) AWS SDK
 - Inspired by the need for better AWS security group management
-
-## Support
-
-For support, please open an issue in the GitHub repository or contact the maintainers.
+- Development assisted by Claude (Anthropic), showcasing the potential of human-AI collaboration in creating robust, production-ready tools
+- Original concept based on legacy AWS security group analysis tools
