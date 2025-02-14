@@ -44,7 +44,7 @@ A Python tool to analyze AWS security group dependencies and identify obsolete o
 1. Clone the repository:
    ```bash
    git clone https://github.com/marc-poljak/AWS-Security-Group-Dependency-Analyzer.git
-   cd aws-sg-analyzer
+   cd AWS-Security-Group-Dependency-Analyzer
    ```
 
 2. Install required packages:
