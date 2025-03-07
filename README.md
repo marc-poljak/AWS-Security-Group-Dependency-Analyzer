@@ -5,10 +5,11 @@ A Python tool to analyze AWS security group dependencies and identify obsolete o
 ## ⚠️ Disclaimer
 
 **USE AT YOUR OWN RISK**. This tool is provided "as is", without warranty of any kind, express or implied. Neither the authors nor contributors shall be liable for any damages or consequences arising from the use of this tool. Always:
-- Test in a non-production environment first
-- Verify results manually before taking action
-- Maintain proper backups
-- Follow your organization's security policies
+
+🧪 Test in a non-production environment first
+✓ Verify results manually before taking action
+💾 Maintain proper backups
+🔒 Follow your organization's security policies
 
 ## Features
 
